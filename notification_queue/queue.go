@@ -40,7 +40,7 @@ func NewNotificationQueue(uri string) *NotificationQueue {
 }
 
 func (this *NotificationQueue) Run() {
-	// 注册Rabbitmq连接成功时间
+	// 注册Rabbitmq连接成功事件
 	this.rabbitmq.RegisterOnConnectedCallback(this.onRabbitmqConnected)
 	this.rabbitmq.Run()
 	time.Sleep(2 * time.Second)
@@ -79,7 +79,6 @@ func (this *NotificationQueue) Run() {
 			}
 
 			for message := range msgCh {
-				log.Printf("Got %d from msgCh", message.DeliveryTag)
 				messageChannel <- message
 			}
 		}
